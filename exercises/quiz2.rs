@@ -7,11 +7,11 @@
 // - Modules
 // - Enums
 //
-// Let's build a little machine in the form of a function. As input, we're going
-// to give a list of strings and commands. These commands determine what action
-// is going to be applied to the string. It can either be:
-// - Uppercase the string
-// - Trim the string
+// Let's build a little machine in the form of a function.
+// As input, we're going to give a list of strings and commands.
+// These commands determine what action is going to be applied to the string.
+
+// It can either be:
 // - Append "bar" to the string a specified amount of times
 // The exact form of this will be:
 // - The input is going to be a Vector of a 2-length tuple,
@@ -20,7 +20,6 @@
 //
 // No hints this time!
 
-// I AM NOT DONE
 
 pub enum Command {
     Uppercase,
@@ -31,12 +30,22 @@ pub enum Command {
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
-        // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
-        for (string, command) in input.iter() {
-            // TODO: Complete the function body. You can do it!
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut output: Vec<String> = vec![];
+
+        for (str1, cmd1) in input.iter() {
+            match cmd1{
+                Command::Uppercase => {output.push(str1.to_uppercase())}
+                Command::Trim => {output.push(str1.trim().to_string())}
+                Command::Append(usize) => {
+                    let mut suffix = String::new();
+                    for _k in 0..*usize {
+                        suffix += &str1.clone();
+                    }
+
+                    output.push(format!("{}bar" ,suffix ));
+                }
+            }
         }
         output
     }
@@ -45,7 +54,9 @@ mod my_module {
 #[cfg(test)]
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    // use my_module;
+    use crate::my_module::transformer;
+
     use super::Command;
 
     #[test]
